@@ -1,0 +1,25 @@
+.track {
+  margin: 20px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  .track__content {
+    width: 200px;
+    margin: 0 20px;
+
+    .track__name {
+
+    }
+
+    .track__artist {
+      font-size: 12px;
+      color: gray;
+    }
+  }
+
+  .track__button_delete {
+    margin-left: auto;
+  }
+}

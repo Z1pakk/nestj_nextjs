@@ -1,0 +1,59 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Album {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name     String
+  author   String
+  picture  String?
+
+  tracks   Track[]
+
+  @@map("albums")
+}
+
+model Track {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name     String
+  artist   String
+  text     String  @db.VarChar(500)
+  listens  Int     @default(0)
+  picture  String?
+  audio    String?
+
+  albumId  Int?
+  album    Album?   @relation(fields: [albumId], references: [id])
+
+  comments Comment[]
+
+  @@map("tracks")
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  username String
+  text     String  @db.VarChar(500)
+
+  trackId  Int
+  track    Track   @relation(fields: [trackId], references: [id])
+
+  @@map("comments")
+}
